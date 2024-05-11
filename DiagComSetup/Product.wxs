@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+	 xmlns:util="http://schemas.microsoft.com/wix/UtilExtension"
+	 >
+	<Product Id="*" Name="DiagCom" Language="1033" Version="$(var.ProductVersion)" Manufacturer="Diadrom" UpgradeCode="c23b52d3-8af0-4416-b99c-d08273581828">
+		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+		<Icon Id="coco.png" SourceFile="images\coco.ico"/>
+		<Property Id="ARPPRODUCTICON" Value="coco.ico" />
+		<UIRef Id="WixUI_Minimal" />
+		<Property Id="REINSTALLMODE" Value="damus" />
+
+		<MajorUpgrade
+			Schedule="afterInstallInitialize"
+  			AllowDowngrades="yes" />
+		<MediaTemplate EmbedCab="yes" />
+		<WixVariable Id="WixUILicenseRtf" Value="LicenseAgreementText.rtf"/>
+
+		<Feature Id="ProductFeature" Title="DiagCom" Level="1">
+			<ComponentGroupRef Id="PublishedComponents"/>
+			<ComponentRef Id="CertDir"/>
+			<ComponentGroupRef Id="DependencyComponentsRuntimeFolder" />
+			<ComponentGroupRef Id="WindowsServiceInstaller" />
+		</Feature>
+
+		<Property Id="POWERSHELLEXE">
+			<RegistrySearch Id="POWERSHELLEXE" Type="raw" Root="HKLM" Key="SOFTWARE\Microsoft\PowerShell\1\ShellIds\Microsoft.PowerShell" Name="Path" />
+		</Property>
+		<Condition Message="This application requires Windows PowerShell.">
+			<![CDATA[Installed OR POWERSHELLEXE]]>
+		</Condition>
+		<CustomAction Id='AddSafeBrowsing' BinaryKey='CustomActionBinary' DllEntry='AddSafeBrowsingAllowedList' Impersonate='no' Execute='deferred'
+					Return='check'/>
+		<CustomAction Id='RemoveSafeBrowsing' BinaryKey='CustomActionBinary' DllEntry='RemoveSafeBrowsingAllowedList' Impersonate='no' Execute='deferred'
+							Return='check'/>
+		<Binary Id='CustomActionBinary' SourceFile="..\CustomActions\bin\Debug\CustomActions.CA.dll"/>
+
+		<InstallExecuteSequence>
+			<Custom Action="CreateCert" Before="InstallFinalize" >NOT REMOVE</Custom>
+			<Custom Action="RemoveCert" Before="InstallFinalize"  >REMOVE</Custom>
+		</InstallExecuteSequence>
+	</Product>
+	<Fragment>
+		<CustomAction Id='CreateCert' BinaryKey='CustomActionBinary' DllEntry='CreateSelfSignedCertificate' Impersonate='no' Execute='deferred'
+						Return='check'/>
+		<CustomAction Id='RemoveCert' BinaryKey='CustomActionBinary' DllEntry='RemoveSelfSignedCertificate' Impersonate='no' Execute='deferred'
+						Return='check'/>
+	</Fragment>
+	<Fragment>
+		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="ProgramFilesFolder">
+				<Directory Id="INSTALLFOLDER" Name="DiagCom">
+					<Directory Id="Certs" Name="Certs">
+						<Component Id="CertDir" Guid="4c98dcb8-36bc-4c89-96b9-1a3180405f1b"
+						  SharedDllRefCount="no" KeyPath="no" NeverOverwrite="no" Permanent="no" Transitive="no"
+						  Win64="no" Location="either">
+							<CreateFolder/>
+						</Component>
+					</Directory>
+					<Directory Id="Scripts" Name="Scripts" />
+					<Directory Id="runtimes" Name="runtimes">
+						<Directory Id="win" Name="win">
+							<Directory Id="lib" Name="lib">
+								<Directory Id="net7.0" Name="net7.0" />
+							</Directory>
+						</Directory>
+					</Directory>
+				</Directory>
+			</Directory>
+		</Directory>
+	</Fragment>
+
+	<Fragment>
+		<ComponentGroup Id="WindowsServiceInstaller" Directory="INSTALLFOLDER">
+			<Component Id="DiagCom.RestApi.exe" Guid="4a7202e8-1620-4033-a1e5-5f8ebe4cd049">
+				<File Id="DiagCom.RestApi.exe" Name="DiagCom.RestApi.exe" Source="$(var.DiagCom.RestApi.TargetDir)\DiagCom.RestApi.exe" KeyPath="yes"/>
+				<ServiceInstall Id="ServiceInstaller"
+				                Type="ownProcess"
+				                Name="DiagComService"
+				                DisplayName="DiagComService"
+				                Description="Doip communication service"
+				                Start="auto"
+				                ErrorControl="normal" />
+				<util:ServiceConfig ServiceName="DiagComService"
+									FirstFailureActionType="restart" 
+									SecondFailureActionType ="restart" 
+									ThirdFailureActionType ="none"/>
+				<ServiceControl Id="ServiceControllerStart"
+				                Name="DiagComService"
+				                Start="install"
+								Wait="no" />
+				<ServiceControl Id="ServiceControllerStop"
+				                Stop="both"
+				                Remove="uninstall"
+				                Name="DiagComService"
+				                Wait="yes" />
+			</Component>
+		</ComponentGroup>
+	</Fragment>
+	
+	<Fragment>
+		<ComponentGroup Id="ProductComponents">
+			<ComponentRef Id="TestFile"/>
+		</ComponentGroup>
+		<DirectoryRef Id="INSTALLFOLDER">
+			<Component Id="TestFile" Guid="51780c2e-d118-4d17-a51c-3e711cd21ae1">
+
+			</Component>
+		</DirectoryRef>
+	</Fragment>
+
+	<Fragment>
+		<ComponentGroup Id="DependencyComponentsRuntimeFolder" Directory="net7.0">
+			<Component Id="System.ServiceProcess.ServiceController.dll" Guid="d00b5b68-854e-4431-8528-80728dc1850a">
+				<File Id="System.ServiceProcess.ServiceController.dll" Name="System.ServiceProcess.ServiceController.dll" Source="$(var.DiagCom.RestApi.TargetDir)\runtimes\win\lib\net7.0\System.ServiceProcess.ServiceController.dll" KeyPath="yes" />
+			</Component>
+		</ComponentGroup>
+	</Fragment>
+
+	
+</Wix>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" InitialTargets="EnsureWixToolsetInstalled" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>3.10</ProductVersion>
+    <Version Condition=" '$(Version)' == '' ">1.0.0</Version>
+    <ProjectGuid>e61f8967-2939-4989-b50e-af89248d5472</ProjectGuid>
+    <SchemaVersion>2.0</SchemaVersion>
+    <OutputName>DiagComSetup</OutputName>
+    <OutputType>Package</OutputType>
+    <Name>DiagComSetup</Name>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+    <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
+    <DefineConstants>Debug</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+    <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|ia64' ">
+    <DefineConstants>Debug</DefineConstants>
+    <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
+    <IntermediateOutputPath>obj\$(Platform)\$(Configuration)\</IntermediateOutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|ia64' ">
+    <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
+    <IntermediateOutputPath>obj\$(Platform)\$(Configuration)\</IntermediateOutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="ComponentsGenerated.wxs" />
+    <Compile Include="Product.wxs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="DiagComSetup.wax" />
+  </ItemGroup>
+  <ItemGroup>
+    <WixExtension Include="WixUIExtension">
+      <HintPath>$(WixExtDir)\WixUIExtension.dll</HintPath>
+      <Name>WixUIExtension</Name>
+    </WixExtension>
+    <WixExtension Include="WixUtilExtension">
+      <HintPath>$(WixExtDir)\WixUtilExtension.dll</HintPath>
+      <Name>WixUtilExtension</Name>
+    </WixExtension>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DiagCom.Commands\DiagCom.Commands.csproj">
+      <Name>DiagCom.Commands</Name>
+      <Project>{3cc66970-d1e1-43da-93ed-38c65f41fc96}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>True</DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
+      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
+    </ProjectReference>
+    <ProjectReference Include="..\DiagCom.Doip\DiagCom.Doip.csproj">
+      <Name>DiagCom.Doip</Name>
+      <Project>{41b5b0fe-278b-4cf7-9975-2101432cef82}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>True</DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
+      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
+    </ProjectReference>
+    <ProjectReference Include="..\DiagCom.RestApi\DiagCom.RestApi.csproj">
+      <Name>DiagCom.RestApi</Name>
+      <Project>{49cfc803-7c31-44c5-bca1-5dddbac370d4}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>True</DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
+      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="images" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="DirectoryHeatTransform.xslt" />
+    <Content Include="images\coco.ico" />
+  </ItemGroup>
+  <Import Project="$(WixTargetsPath)" Condition=" '$(WixTargetsPath)' != '' " />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\WiX\v3.x\Wix.targets" Condition=" '$(WixTargetsPath)' == '' AND Exists('$(MSBuildExtensionsPath32)\Microsoft\WiX\v3.x\Wix.targets') " />
+  <Target Name="EnsureWixToolsetInstalled" Condition=" '$(WixTargetsImported)' != 'true' ">
+    <Error Text="The WiX Toolset v3.11 build tools must be installed to build this project. To download the WiX Toolset, see https://wixtoolset.org/releases/v3.11/stable" />
+  </Target>
+  <!--
+	To modify your build process, add your task inside one of the targets below and uncomment it.
+	Other similar extension points exist, see Wix.targets.
+	<Target Name="BeforeBuild">
+	</Target>
+	<Target Name="AfterBuild">
+	</Target>
+	-->
+  <Target Name="BeforeBuild">
+    <Exec Command="rd /s /q ..\.DiagCom.RestApi\bin\$(Configuration)\net7.0\win-$(Platform)" />
+    <Exec Command="dotnet publish ..\DiagCom.RestApi\DiagCom.RestApi.csproj -c $(Configuration) -r win-$(Platform)" />
+    <Exec Command="del ..\DiagCom.RestApi\bin\$(Configuration)\net7.0\win-$(Platform)\publish\DiagCom.RestApi.exe" />
+    <GetAssemblyIdentity AssemblyFiles="..\DiagCom.RestApi\bin\$(Configuration)\net7.0\win-$(Platform)\DiagCom.RestApi.dll">
+      <Output TaskParameter="Assemblies" ItemName="AssemblyVerion" />
+    </GetAssemblyIdentity>
+    <PropertyGroup>
+      <DefineConstants>BuildVersion=%(AssemblyVerion.Version);BasePath=..\DiagCom.RestApi\bin\$(Configuration)\net7.0\win-$(Platform)\publish</DefineConstants>
+      <DefineConstants>ProductVersion=$(Version);BasePath=..\DiagCom.RestApi\bin\$(Configuration)\net7.0\win-$(Platform)\publish</DefineConstants>
+    </PropertyGroup>
+    <!--Hrvest file components from publish folder-->
+    <HeatDirectory RunAsSeparateProcess="true" OutputFile="ComponentsGenerated.wxs" Transforms="DirectoryHeatTransform.xslt" DirectoryRefId="INSTALLFOLDER" ComponentGroupName="PublishedComponents" SuppressCom="true" Directory="..\DiagCom.RestApi\bin\$(Configuration)\net7.0\win-$(Platform)\publish" SuppressFragments="true" SuppressRegistry="true" SuppressRootDirectory="true" AutoGenerateGuids="false" GenerateGuidsNow="true" KeepEmptyDirectories="false" ToolPath="$(WixToolPath)" PreprocessorVariable="var.BasePath" />
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+</Project>

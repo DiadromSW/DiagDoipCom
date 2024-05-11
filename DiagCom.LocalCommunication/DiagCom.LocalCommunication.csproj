@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DiagCom.Commands\DiagCom.Commands.csproj" />
+    <ProjectReference Include="..\DiagCom.Doip\DiagCom.Doip.csproj" />
+    <ProjectReference Include="..\DiagCom.Uds\DiagCom.Uds.csproj" />
+  </ItemGroup>
+
+</Project>
