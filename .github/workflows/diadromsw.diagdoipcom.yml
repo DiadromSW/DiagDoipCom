@@ -19,4 +19,4 @@ jobs:
     - name: install msbuild
       uses: microsoft/setup-msbuild@v1.3.1
     - name: run msbuild
-      run: msbuild DiagCom.sln -nowarn:CS1591;CA1416 -p:Configuration=DiagCom -p:Platform="x86"
+      run: msbuild DiagCom.sln
