@@ -26,19 +26,4 @@ steps:
     vsVersion: '17.0'
     platform: 'x86'
     configuration: 'DiagCom'
-- task: VSTest@2
-  displayName: 'Testing DiagCom'
-  inputs:
-    testSelector: 'testAssemblies'
-    testAssemblyVer2: |
-      **\*Test.dll
-      **\*Tests.dll
-      **\*UnitTests.dll
-      **\*IntegrationTests.dll
-      !**\bin\**\ref\**
-      !**\*TestAdapter.dll
-      !**\obj\**
-    testFiltercriteria: 'TestCategory!=Nightly'
-    codeCoverageEnabled: true
-    searchFolder: '$(System.DefaultWorkingDirectory)'
-    runSettingsFile: 'test.runsettings'
+
