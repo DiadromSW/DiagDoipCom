@@ -2,7 +2,7 @@ name: NDS/DiadromSW.DiagDoipCom
 on:
   push:
     branches:
-    - "*"
+    - master
   pull_request:
     branches:
     - master
@@ -15,8 +15,8 @@ jobs:
     - name: NuGet tool installer
       uses: nuget/setup-nuget@v1.2.0
     - name: NuGet restore
-      run: nuget restore **/*.sln
+      run: nuget restore DiagCom.sln
     - name: install msbuild
       uses: microsoft/setup-msbuild@v1.3.1
     - name: run msbuild
-      run: msbuild **\*.sln -nowarn:CS1591;CA1416 -p:Configuration=DiagCom -p:Platform="x86"
+      run: msbuild DiagCom.sln -nowarn:CS1591;CA1416 -p:Configuration=DiagCom -p:Platform="x86"
