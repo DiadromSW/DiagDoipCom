@@ -1,0 +1,44 @@
+
+pool:
+  vmImage: 'windows-latest'
+  
+steps:
+- task: NuGetToolInstaller@1
+  displayName: 'NuGet tool installer'
+
+- task: CmdLine@2 
+  inputs: 
+    script: '@powershell -NoProfile -ExecutionPolicy unrestricted -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; &([scriptblock]::Create((Invoke-WebRequest -useb ''https://dot.net/v1/dotnet-install.ps1''))) -InstallDir \"C:\Program Files (x86)\dotnet\" -Version 7.0.404 -architecture x86"'
+
+    
+- task: NuGetCommand@2
+  displayName: 'NuGet restore'
+  inputs:
+    command: 'restore'
+    restoreSolution: '**/*.sln'
+    feedsToUse: 'select'
+
+- task: VSBuild@1
+  displayName: 'Building DiagCom'
+  inputs:
+    msbuildArgs: '-nowarn:CS1591;CA1416'
+    solution: '**\*.sln'
+    vsVersion: '17.0'
+    platform: 'x86'
+    configuration: 'DiagCom'
+- task: VSTest@2
+  displayName: 'Testing DiagCom'
+  inputs:
+    testSelector: 'testAssemblies'
+    testAssemblyVer2: |
+      **\*Test.dll
+      **\*Tests.dll
+      **\*UnitTests.dll
+      **\*IntegrationTests.dll
+      !**\bin\**\ref\**
+      !**\*TestAdapter.dll
+      !**\obj\**
+    testFiltercriteria: 'TestCategory!=Nightly'
+    codeCoverageEnabled: true
+    searchFolder: '$(System.DefaultWorkingDirectory)'
+    runSettingsFile: 'test.runsettings'
