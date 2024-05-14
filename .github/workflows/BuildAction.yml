@@ -1,5 +1,4 @@
-
-name: DiadromSW.DiagDoipCom
+name: NDS/DiadromSW.DiagDoipCom
 on:
   push:
     branches:
@@ -15,10 +14,9 @@ jobs:
       uses: actions/checkout@v4.1.0
     - name: NuGet tool installer
       uses: nuget/setup-nuget@v1.2.0
-    - run: '@powershell -NoProfile -ExecutionPolicy unrestricted -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; &([scriptblock]::Create((Invoke-WebRequest -useb ''https://dot.net/v1/dotnet-install.ps1''))) -InstallDir \"C:\Program Files (x86)\dotnet\" -Version 7.0.404 -architecture x86"'
     - name: NuGet restore
-      run: nuget restore **/*.sln
+      run: nuget restore DiagCom.sln
     - name: install msbuild
       uses: microsoft/setup-msbuild@v1.3.1
     - name: run msbuild
-      run: msbuild **\*.sln -nowarn:CS1591;CA1416 -p:Configuration=DiagCom -p:Platform="x86"
+      run: msbuild DiagCom.sln
