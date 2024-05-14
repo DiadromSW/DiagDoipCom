@@ -14,8 +14,6 @@ jobs:
       uses: actions/checkout@v4.1.0
     - name: NuGet tool installer
       uses: nuget/setup-nuget@v1.2.0
-    - run: '@powershell -NoProfile -ExecutionPolicy unrestricted -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; &([scriptblock]::Create((Invoke-WebRequest -useb ''https://dot.net/v1/dotnet-install.ps1''))) -InstallDir \"C:\Program Files (x86)\dotnet\" -Version 7.0.404 -architecture x86"'
-    # NuGet does not accept glob patterns. Consider specifying files directly or using a solution.
     - name: NuGet restore
       run: nuget restore **/*.sln
     - name: install msbuild
