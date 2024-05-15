@@ -2,7 +2,7 @@
 DiagCom represents a vehicle communication REST service based on Doip(IS013400)/UDS(ISO14229). It identifies on the local network vehicles that have Doip support and gives the possibility to run diagnostic services on detected vehicles. Identification is done by reading UDP Vehicle Identification Messages, that provide information about vehicle IP and VIN. 
 Besides vehicle detection and running Diagnostic services, the service has few predefined vehicle operations, such as Clear and Read DTC and Read Battery Voltage. As well as a few logg-related endpoints as start/stop logging and extract logging for a specific vehicle. 
   
-The DiagCom service can be installed via Wix installer and run as windows service on http://localhost:5001 with local system account. It can be also used as a library by importing DiagCom nuget or by using directly from the provided source code.
+The DiagCom service can be installed via Wix installer and run as windows service on http://localhost:5001 with local system account. It can be also used as a library by importing DiagCom nuget(https://www.nuget.org/packages/DiagCom.DoipCommunication/) or by using directly from the provided source code.
 
 # DiagCom Api:
 DiagCom uses Swagger to document and visualise endpoints. It can be accessed via (https://localhost:5001/index.html). 
