@@ -5,7 +5,7 @@ Besides vehicle detection and running Diagnostic services, the service has few p
 The DiagCom service can be installed via Wix installer and run as windows service on http://localhost:5001 with local system account. It can be also used as a library by importing DiagCom nuget(https://www.nuget.org/packages/DiagCom.DoipCommunication/) or by using directly from the provided source code.
 
 # DiagCom Api:
-DiagCom uses Swagger to document and visualise endpoints. It can be accessed via (https://localhost:5001/index.html). 
+DiagCom uses Swagger to document and visualise endpoints. It can be accessed via (https://localhost:5001/index.html). There are a Vehicle Comminication API description on the [Wiki](https://github.com/DiadromSW/DiagDoipCom/wiki/DiagCom)
 The following diagnostic services endpoints are exposed by DiagCom:
 
 - GetConnectedVehicles - Returns a list of connected vehicles VINs. Vehicles are identified by catching UDP messages brodcasted by Doip Ecu. No TCP connection to the vehicle is established at this operation. 
