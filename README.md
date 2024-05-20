@@ -1,11 +1,17 @@
 # Introduction 
-DiagCom represents a vehicle communication REST service based on Doip(IS013400)/UDS(ISO14229). It identifies on the local network vehicles that have Doip support and gives the possibility to run diagnostic services on detected vehicles. Identification is done by reading UDP Vehicle Identification Messages, that provide information about vehicle IP and VIN. 
+DiagCom represents a vehicle communication REST service based on DoIP(IS013400)/UDS(ISO14229). It identifies on the local network vehicles that have Doip support and gives the possibility to run diagnostic services on detected vehicles. Identification is done by reading UDP Vehicle Identification Messages, that provide information about vehicle IP and VIN. 
 Besides vehicle detection and running Diagnostic services, the service has few predefined vehicle operations, such as Clear and Read DTC and Read Battery Voltage. As well as a few logg-related endpoints as start/stop logging and extract logging for a specific vehicle. 
   
 The DiagCom service can be installed via Wix installer and run as windows service on http://localhost:5001 with local system account. It can be also used as a library by importing DiagCom nuget(https://www.nuget.org/packages/DiagCom.DoipCommunication/) or by using directly from the provided source code.
 
-# DiagCom Api:
-DiagCom uses Swagger to document and visualise endpoints. It can be accessed via (https://localhost:5001/index.html). There are a Vehicle Comminication API description on the [Wiki](https://github.com/DiadromSW/DiagDoipCom/wiki/DiagCom)
+# Get started
+The DiagCom installer can be found attached as a [release](https://github.com/DiadromSW/DiagDoipCom/releases/tag/Diadrom). It is a self-contained package that will install DiagCom and start it as a local service on port 5001. Service Api can be explored and tested with swagger http://localhost:5001/index.html. 
+
+DiagCom is built to communicate with all the vehicle that has DoIP support. The vehicle needs to be connected to the same network as DiagCom through an Ethernet to ODB cable. Ignition ON is required as well to identify and create DoIP connection to the vehicle.
+
+# DiagCom Api
+DiagCom uses Swagger to document and visualise endpoints. It can be accessed via (https://localhost:5001/index.html). There are a Vehicle Comminication API description on the [Wiki](https://github.com/DiadromSW/DiagDoipCom/wiki/DiagCom) .
+
 The following diagnostic services endpoints are exposed by DiagCom:
 
 - GetConnectedVehicles - Returns a list of connected vehicles VINs. Vehicles are identified by catching UDP messages brodcasted by Doip Ecu. No TCP connection to the vehicle is established at this operation. 
@@ -30,7 +36,7 @@ The provided solution has 8 main projects:
 - Logging -  has two methods to log both done via Nlog (https://nlog-project.org/). The first is logging into the log file "SystemLog.log". This logging begins when the DiagCom service starts. SystemLog logs the general flow for DiagCom. The configuration of the log rules is static in the "nlog.config" file in the RestApi project. The second logging method is for "Vin Logs" These logs ISO14229. The configuration is dynamic at LogHandler.StartLogging().  
 - CustomActions - There is a Cors certificate required to run DiagCom as Service. It is created as a custom action during DiagCom installation. 
 
-# References and Licenses:
+# References and Licenses
 
 | Reference                                       | Version | License Type    | License                                                               |
 |-------------------------------------------------|---------|-----------------|-----------------------------------------------------------------------|
