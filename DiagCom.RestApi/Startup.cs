@@ -56,7 +56,7 @@ namespace RestApi
                     Title = "DiagCom API",
                     Version = "v1",
                     // Todo: extend/edit description of API
-                    Description = "A ASP.NET Core Web API"
+                    Description = "Vehicle Comminication API"
                 });
 
                 // Set the comments path for the Swagger JSON and UI.
