@@ -1,4 +1,4 @@
-[![Qodana](https://github.com/DiadromSW/DiagDoipCom/actions/workflows/code_qodana.yml/badge.svg?branch=develop)](https://github.com/DiadromSW/DiagDoipCom/actions/workflows/code_qodana.yml) 
+[![Qodana](https://github.com/DiadromSW/DiagDoipCom/actions/workflows/code_qodana.yml/badge.svg?branch=develop)](https://github.com/DiadromSW/DiagDoipCom/actions/workflows/code_qodana.yml) [![DiadromSW.DiagDoipCom](https://github.com/DiadromSW/DiagDoipCom/actions/workflows/BuildAction.yml/badge.svg)](https://github.com/DiadromSW/DiagDoipCom/actions/workflows/BuildAction.yml)
 
 # Introduction 
 DiagCom represents a vehicle communication REST service based on DoIP(IS013400)/UDS(ISO14229). It identifies on the local network vehicles that have Doip support and gives the possibility to run diagnostic services on detected vehicles. Identification is done by reading UDP Vehicle Identification Messages, that provide information about vehicle IP and VIN. 
