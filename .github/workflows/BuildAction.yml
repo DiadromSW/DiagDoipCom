@@ -1,11 +1,11 @@
-name: NDS/DiadromSW.DiagDoipCom
+name: DiadromSW.DiagDoipCom
 on:
   push:
     branches:
-    - master
+    - develop, master
   pull_request:
     branches:
-    - master
+    - develop, master
 jobs:
   build:
     runs-on: windows-latest
