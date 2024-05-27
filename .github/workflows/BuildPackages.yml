@@ -32,5 +32,5 @@ jobs:
     - name: run msbuild
       run: msbuild DiagCom.sln
     - name: Publish the DoipCommunication packages to GPR
-      run: dotnet nuget push \DiagDoipCom\DiagDoipCom\Nugets\*.nupkg
+      run: dotnet nuget push D:/a/DiagDoipCom/DiagDoipCom/Nugets*.nupkg
   
