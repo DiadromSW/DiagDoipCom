@@ -12,7 +12,7 @@
     <Product>DiagCom.Logging</Product>
     <Description>This package is a part of DiagCom solution. That represents doip vehicle communication service.</Description>
     <PackageProjectUrl>https://github.com/DiadromSW/DiagDoipCom</PackageProjectUrl>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageReadmeFile>README_Logging.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/DiadromSW/DiagDoipCom</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>Diadrom; DoIP; UDS; ISO14229; ISO13400; DiagCom</PackageTags>
@@ -38,6 +38,10 @@
 
   <ItemGroup>
     <None Update="README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Update="README_Logging.md">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>

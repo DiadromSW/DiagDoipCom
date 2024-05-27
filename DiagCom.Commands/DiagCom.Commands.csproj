@@ -12,7 +12,7 @@
     <Description>This package is a part of DiagCom solution. That represents doip vehicle communication service.</Description>
     <PackageProjectUrl>https://github.com/DiadromSW/DiagDoipCom</PackageProjectUrl>
     <RepositoryUrl>https://github.com/DiadromSW/DiagDoipCom</RepositoryUrl>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageReadmeFile>README_Commands.md</PackageReadmeFile>
     <RepositoryType>git</RepositoryType>
     <PackageTags>Diadrom; DoIP; UDS; ISO14229; ISO13400; DiagCom</PackageTags>
     <PackageReleaseNotes>Release of version 1.0.0.0</PackageReleaseNotes>
@@ -34,6 +34,10 @@
 
   <ItemGroup>
     <None Update="README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Update="README_Commands.md">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
