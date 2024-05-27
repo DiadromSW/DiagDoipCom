@@ -18,6 +18,7 @@
     <PackageTags>Diadrom; DoIP; UDS; ISO14229; ISO13400; DiagCom</PackageTags>
     <PackageReleaseNotes>Release of version 1.0.0.0</PackageReleaseNotes>
     <PackageLicenseFile>License.txt</PackageLicenseFile>
+    <PackageOutputPath>..\Nugets\</PackageOutputPath>
   </PropertyGroup>
 
   <ItemGroup>

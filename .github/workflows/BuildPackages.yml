@@ -20,27 +20,17 @@ jobs:
         source-url: https://nuget.pkg.github.com/DiadromSW/index.json
       env:
         NUGET_AUTH_TOKEN: ${{secrets.NPK_TOKEN}}
-    - name: Build DoipCommunication
-      run: dotnet build --configuration Release ./DiagCom.LocalCommunication/DiagCom.LocalCommunication.csproj
-    - name: Publish the DoipCommunication package to GPR
-      run: dotnet nuget push ./DiagCom.LocalCommunication/bin/Release/*.nupkg
-    - name: Build Doip
-      run: dotnet build --configuration Release ./DiagCom.Doip/DiagCom.Doip.csproj
-    - name: Publish the Doip package to GPR
-      run: dotnet nuget push ./DiagCom.LocalCommunication/bin/Release/*.nupkg
-    - name: Build Uds
-      run: dotnet build --configuration Release ./DiagCom.Uds/DiagCom.Uds.csproj
-    - name: Publish the Uds package to GPR
-      run: dotnet nuget push ./DiagCom.Uds/bin/Release/*.nupkg
-    - name: Build Commands
-      run: dotnet build --configuration Release ./DiagCom.Commands/DiagCom.Commands.csproj
-    - name: Publish the Commands package to GPR
-      run: dotnet nuget push ./DiagCom.Commands/bin/Release/*.nupkg
-    - name: Build Logging
-      run: dotnet build --configuration Release ./Logging/DiagCom.Logging.csproj
-    - name: Publish the Logging package to GPR
-      run: dotnet nuget push ./Logging/bin/Release/*.nupkg
-    - name: Build Utilities
-      run: dotnet build --configuration Release ./Utilities/DiagCom.Utilities.csproj
-    - name: Publish the Utilities package to GPR
-      run: dotnet nuget push ./Utilities/bin/Release/*.nupkg
+
+    - name: checkout
+      uses: actions/checkout@v4.1.0
+    - name: NuGet tool installer
+      uses: nuget/setup-nuget@v1.2.0
+    - name: NuGet restore
+      run: nuget restore DiagCom.sln
+    - name: install msbuild
+      uses: microsoft/setup-msbuild@v1.3.1
+    - name: run msbuild
+      run: msbuild DiagCom.sln
+    - name: Publish the DoipCommunication packages to GPR
+      run: dotnet nuget push ./Nugets/*.nupkg
+  

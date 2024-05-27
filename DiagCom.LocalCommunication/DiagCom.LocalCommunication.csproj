@@ -18,6 +18,7 @@
     <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/DiadromSW/DiagDoipCom</RepositoryUrl>
+    <PackageOutputPath>..\Nugets\</PackageOutputPath>
   </PropertyGroup>
 
   <ItemGroup>
