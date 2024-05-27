@@ -4,7 +4,29 @@
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageId>DiagCom.Logging</PackageId>
+    <Title>DiagCom.Logging</Title>
+    <Authors>DiadromSoftware</Authors>
+    <Company>DiadromSoftware</Company>
+    <Product>DiagCom.Logging</Product>
+    <Description>This package is a part of DiagCom solution. That represents doip vehicle communication service.</Description>
+    <PackageProjectUrl>https://github.com/DiadromSW/DiagDoipCom</PackageProjectUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/DiadromSW/DiagDoipCom</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>Diadrom; DoIP; UDS; ISO14229; ISO13400; DiagCom</PackageTags>
+    <PackageReleaseNotes>Release of version 1.0.0.0</PackageReleaseNotes>
+    <PackageLicenseFile>License.txt</PackageLicenseFile>
+    <PackageOutputPath>..\Nugets\</PackageOutputPath>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\License.txt">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="NLog.Web.AspNetCore" Version="5.2.1" />
@@ -12,6 +34,13 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Utilities\Utilities.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>

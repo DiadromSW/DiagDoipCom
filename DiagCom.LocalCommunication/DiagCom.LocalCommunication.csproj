@@ -4,12 +4,41 @@
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageId>DiagCom.DoipCommunication</PackageId>
+    <Title>DiagCom.DoipCommunication</Title>
+    <Authors>DiadromSoftware</Authors>
+    <Company>DiadromSoftware</Company>
+    <Product>DiadCom.DoipCommunication</Product>
+    <Description>This package is a part of DiagCom solution. That represents doip vehicle communication service.</Description>
+    <PackageTags>Diadrom; DoIP; UDS; ISO14229; ISO13400; DiagCom</PackageTags>
+    <PackageReleaseNotes>Release of version 1.0.0.0</PackageReleaseNotes>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageLicenseFile>License.txt</PackageLicenseFile>
+    <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/DiadromSW/DiagDoipCom</RepositoryUrl>
+    <PackageOutputPath>..\Nugets\</PackageOutputPath>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\License.txt">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\DiagCom.Commands\DiagCom.Commands.csproj" />
     <ProjectReference Include="..\DiagCom.Doip\DiagCom.Doip.csproj" />
     <ProjectReference Include="..\DiagCom.Uds\DiagCom.Uds.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>

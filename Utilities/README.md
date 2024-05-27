@@ -1,0 +1,1 @@
+DiagCom.Utilities package is a dependency from DiagCom.DoipCommunication package. For more information on how to use the package for vehicle communication refer to this package DiagCom.DoipCommunication
