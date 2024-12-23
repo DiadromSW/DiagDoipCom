@@ -1,9 +1,9 @@
 # workflow triggers
 on:
   push:
-    branches: [ source ]
+    branches: [ develop ]
   pull_request:
-    branches: [ source ]
+    branches: [ develop ]
   workflow_dispatch:
 
   # Allows external webhook trigger
